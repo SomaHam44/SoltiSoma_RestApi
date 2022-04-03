@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoltiSoma_RestApi">
         <activity
+            android:name=".ListResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InsertActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
