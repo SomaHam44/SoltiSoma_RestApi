@@ -7,20 +7,21 @@
     android:orientation="vertical"
     tools:context=".ListResultActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Összes ország"
-        android:id="@+id/textviewOrszag"
-        android:layout_marginBottom="20dp"
-        android:scrollbars="vertical"
-        android:textSize="20sp"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnVisszafele"
         android:textSize="20sp"
         android:text="Vissza"/>
+    
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listviewOrszagVaros"
+        tools:listitem="@layout/list_item"/>
+
+
+
+
 
 </LinearLayout>
