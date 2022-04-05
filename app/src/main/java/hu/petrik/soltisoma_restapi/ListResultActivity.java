@@ -55,7 +55,7 @@ public class ListResultActivity extends AppCompatActivity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             Gson converter = new Gson();
-            if (response == null|response.getResponseCode() >= 400) {
+            if (response == null | response.getResponseCode() >= 400) {
                 Toast.makeText(ListResultActivity.this, "Hiba történt a kérésnek feldolgozása során!", Toast.LENGTH_SHORT).show();
 
             }
@@ -67,6 +67,8 @@ public class ListResultActivity extends AppCompatActivity {
                 binding.listviewOrszagVaros.setAdapter(cityArrayAdapter);
             }
         }
+
+
     }
 
 
