@@ -3,11 +3,9 @@ package hu.petrik.soltisoma_restapi;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -22,7 +20,7 @@ import hu.petrik.soltisoma_restapi.databinding.ActivityListResultBinding;
 public class ListResultActivity extends AppCompatActivity {
    ActivityListResultBinding binding;
    List<City> cities = new ArrayList<>();
-   private String URL = "http://127.0.0.1:8000/api/cities";
+   private String url = "http://10.0.2.2:8000/api/cities";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +28,13 @@ public class ListResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_result);
         binding = ActivityListResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        CityTask cityTask = new CityTask();
-        cityTask.execute();
         binding.btnVisszafele.setOnClickListener(view -> {
             Intent vissza = new Intent(ListResultActivity.this, MainActivity.class);
             startActivity(vissza);
             finish();
         });
+        CityTask cityTask = new CityTask();
+        cityTask.execute();
     }
 
     private class CityTask extends AsyncTask<Void, Void, Response> {
@@ -45,7 +43,7 @@ public class ListResultActivity extends AppCompatActivity {
         protected Response doInBackground(Void... voids) {
             Response response = null;
             try {
-                response = RequestHandler.get(URL);
+                response = RequestHandler.get(url);
 
             } catch (IOException e) {
                 e.getStackTrace();
@@ -57,7 +55,7 @@ public class ListResultActivity extends AppCompatActivity {
         protected void onPostExecute(Response response) {
             super.onPostExecute(response);
             Gson converter = new Gson();
-            if (response == null || response.getResponseCode() >= 400) {
+            if (response == null|response.getResponseCode() >= 400) {
                 Toast.makeText(ListResultActivity.this, "Hiba történt a kérésnek feldolgozása során!", Toast.LENGTH_SHORT).show();
 
             }
@@ -65,7 +63,7 @@ public class ListResultActivity extends AppCompatActivity {
                 City[] places =  converter.fromJson(response.getContent(), City[].class);
                 cities.clear();
                 cities.addAll(Arrays.asList(places));
-                ArrayAdapter<City> cityArrayAdapter = new ArrayAdapter<>(ListResultActivity.this,  R.layout.list_item, R.id.textviewItems, cities);
+                ArrayAdapter<City> cityArrayAdapter = new ArrayAdapter<>(ListResultActivity.this, R.layout.list_item, R.id.textviewItems, cities);
                 binding.listviewOrszagVaros.setAdapter(cityArrayAdapter);
             }
         }
