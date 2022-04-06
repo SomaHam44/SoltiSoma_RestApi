@@ -62,12 +62,6 @@ public class InsertActivity extends AppCompatActivity {
         String nev = binding.editNev.getText().toString().trim();
         String orszag = binding.editOrszag.getText().toString().trim();
         String lakossagString = binding.editLakossag.getText().toString().trim();
-        if (nev.isEmpty() && orszag.isEmpty() && lakossagString.isEmpty()) {
-            binding.btnFelvetel.setEnabled(false);
-        }
-        if (!nev.isEmpty() || !orszag.isEmpty() || !lakossagString.isEmpty()) {
-            binding.btnFelvetel.setEnabled(true);
-        }
         if (!validacio(nev, orszag, lakossagString)) {
             Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
             return;
