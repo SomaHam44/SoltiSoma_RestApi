@@ -49,11 +49,6 @@ public class InsertActivity extends AppCompatActivity {
             Toast.makeText(this, "Lakosság megadása kötelező", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (nev.isEmpty() && orszag.isEmpty() && lakossagString.isEmpty()) {
-            binding.btnFelvetel.setEnabled(false);
-            return false;
-        }
-        binding.btnFelvetel.setEnabled(true);
         return true;
     }
 
@@ -67,11 +62,19 @@ public class InsertActivity extends AppCompatActivity {
         String nev = binding.editNev.getText().toString().trim();
         String orszag = binding.editOrszag.getText().toString().trim();
         String lakossagString = binding.editLakossag.getText().toString().trim();
+        if (nev.isEmpty() && orszag.isEmpty() && lakossagString.isEmpty()) {
+            binding.btnFelvetel.setEnabled(false);
+        }
+        if (!nev.isEmpty() || !orszag.isEmpty() || !lakossagString.isEmpty()) {
+            binding.btnFelvetel.setEnabled(true);
+        }
         if (!validacio(nev, orszag, lakossagString)) {
+            Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
             return;
         }
         int lakossag = Integer.parseInt(lakossagString);
         City city = new City(0, nev, orszag, lakossag);
+        Toast.makeText(InsertActivity.this, "Sikeres felvétel", Toast.LENGTH_SHORT).show();
         Gson jsonConverter = new Gson();
         CityTask task = new CityTask(url, "POST", jsonConverter.toJson(city));
         task.execute();
@@ -99,7 +102,7 @@ public class InsertActivity extends AppCompatActivity {
             try {
                 response = RequestHandler.post(requestUrl, requestParams);
             } catch (IOException e) {
-                runOnUiThread(() -> Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(InsertActivity.this, e.toString(), Toast.LENGTH_SHORT).show());
             }
             return response;
         }

@@ -47,7 +47,8 @@ public class City {
 
     @Override
     public String toString() {
-        return String.format("%2d %10s %10s %7d", id, nev, orszag, lakossag);
+        return String.format(
+                "%d %s (%s) [%d]", id, nev, orszag, lakossag);
 
     }
 }
