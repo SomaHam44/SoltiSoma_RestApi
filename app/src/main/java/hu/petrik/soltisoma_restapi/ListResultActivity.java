@@ -19,7 +19,7 @@ import hu.petrik.soltisoma_restapi.databinding.ActivityListResultBinding;
 
 public class ListResultActivity extends AppCompatActivity {
    ActivityListResultBinding binding;
-   List<City> cities = new ArrayList<>();
+   public static List<City> cities = new ArrayList<>();
    private String url = "http://10.0.2.2:8000/api/cities";
 
     @Override
@@ -33,20 +33,35 @@ public class ListResultActivity extends AppCompatActivity {
             startActivity(vissza);
             finish();
         });
-        CityTask cityTask = new CityTask();
+        CityTask cityTask = new CityTask(url, "GET");
         cityTask.execute();
     }
 
     private class CityTask extends AsyncTask<Void, Void, Response> {
+        String requestUrl;
+        String requestType;
+        String requestParams;
+
+        public CityTask(String requestUrl, String requestType, String requestParams) {
+            this.requestUrl = requestUrl;
+            this.requestType = requestType;
+            this.requestParams = requestParams;
+        }
+
+        public CityTask(String requestUrl, String requestType) {
+            this.requestUrl = requestUrl;
+            this.requestType = requestType;
+        }
 
         @Override
         protected Response doInBackground(Void... voids) {
             Response response = null;
             try {
-                response = RequestHandler.get(url);
+                response = RequestHandler.get(requestUrl);
 
             } catch (IOException e) {
-                e.getStackTrace();
+                runOnUiThread(() ->
+                        Toast.makeText(ListResultActivity.this, e.toString(), Toast.LENGTH_SHORT).show());
             }
             return response;
         }
