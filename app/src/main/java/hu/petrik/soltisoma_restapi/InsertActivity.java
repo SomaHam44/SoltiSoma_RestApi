@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,6 +37,57 @@ public class InsertActivity extends AppCompatActivity {
         binding.btnFelvetel.setOnClickListener(view -> {
             varosHozzadasa();
         });
+        binding.editNev.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gombfeoldo();
+
+            }
+        });
+        binding.editOrszag.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gombfeoldo();
+
+            }
+        });
+        binding.editLakossag.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                gombfeoldo();
+
+            }
+        });
     }
 
     private boolean validacio(String nev, String orszag, String lakossagString) {
@@ -52,6 +106,13 @@ public class InsertActivity extends AppCompatActivity {
         return true;
     }
 
+    private void gombfeoldo() {
+        if (!binding.editNev.getText().equals("") &&
+                !binding.editNev.getText().equals("") &&
+                        !binding.editLakossag.getText().equals("")) {
+            binding.btnFelvetel.setEnabled(true);
+        }
+    }
     private void alaphelyzet() {
         binding.editNev.setText("");
         binding.editOrszag.setText("");
@@ -62,6 +123,9 @@ public class InsertActivity extends AppCompatActivity {
         String nev = binding.editNev.getText().toString().trim();
         String orszag = binding.editOrszag.getText().toString().trim();
         String lakossagString = binding.editLakossag.getText().toString().trim();
+        if (nev.isEmpty() || orszag.isEmpty() || lakossagString.isEmpty()) {
+            binding.btnFelvetel.setEnabled(false);
+        }
         if (!validacio(nev, orszag, lakossagString)) {
             Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
             return;
