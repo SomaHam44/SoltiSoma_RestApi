@@ -1,17 +1,14 @@
 package hu.petrik.soltisoma_restapi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
@@ -36,6 +33,19 @@ public class InsertActivity extends AppCompatActivity {
         });
         binding.btnFelvetel.setOnClickListener(view -> {
             varosHozzadasa();
+        });
+        binding.editNev.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                    if (ListResultActivity.cities.contains(binding.editNev.getText().toString().trim())) {
+                        binding.editNev.setTextColor(Color.RED);
+                    } else {
+                        binding.editNev.setTextColor(Color.GREEN);
+                    }
+                }
+            else {
+                binding.editNev.setTextColor(Color.BLACK);
+            }
+
         });
         binding.editNev.addTextChangedListener(new TextWatcher() {
             @Override
