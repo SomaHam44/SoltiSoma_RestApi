@@ -25,11 +25,6 @@ public class InsertActivity extends AppCompatActivity {
    ActivityInsertBinding binding;
     //private String url = "http://10.0.2.2:8000/api/cities";
     private String url = "https://retoolapi.dev/jSLi3M/varosok";
-    private int[] gifek = new int[]{R.drawable.gif1,
-            R.drawable.gif2, R.drawable.gif3, R.drawable.gif4, R.drawable.gif5,
-            R.drawable.gif6, R.drawable.gif7, R.drawable.gif8, R.drawable.gif9,
-            R.drawable.gif10};
-    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,16 +109,16 @@ public class InsertActivity extends AppCompatActivity {
     private boolean validacio(String nev, String orszag, String lakossagString) {
         if (nev.isEmpty()) {
             Toast.makeText(this, "Név megadása kötelező", Toast.LENGTH_SHORT).show();
-            randomGif();
+            gif(R.drawable.gif5);
             return false;
         }
         if (orszag.isEmpty()) {
             Toast.makeText(this, "Ország megadása kötelező", Toast.LENGTH_SHORT).show();
-            randomGif();
+            gif(R.drawable.gif4);
             return false;
         }
         if (lakossagString.isEmpty()) {
-            randomGif();
+            gif(R.drawable.gif1);
             Toast.makeText(this, "Lakosság megadása kötelező", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -143,10 +138,9 @@ public class InsertActivity extends AppCompatActivity {
         binding.editLakossag.setText("");
     }
 
-    private void randomGif() {
+    private void gif(int gif) {
         binding.animacio.setVisibility(View.VISIBLE);
-        int index = random.nextInt(9) + 1;
-        int gif = gifek[index];
+        gif = gif;
         binding.animacio.setImageResource(gif);
 
     }
@@ -161,11 +155,11 @@ public class InsertActivity extends AppCompatActivity {
         String lakossagString = binding.editLakossag.getText().toString().trim();
         if (nev.isEmpty() || orszag.isEmpty() || lakossagString.isEmpty()) {
             binding.btnFelvetel.setEnabled(false);
-            randomGif();
+            gif(R.drawable.gif1);
         }
         if (!validacio(nev, orszag, lakossagString)) {
             Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
-            randomGif();
+            gif(R.drawable.gif3);
             return;
         }
         int lakossag = Integer.parseInt(lakossagString);
