@@ -42,11 +42,15 @@ public class InsertActivity extends AppCompatActivity {
         });
         binding.editNev.setOnFocusChangeListener((view, hasFocus) -> {
             if (!hasFocus) {
-                    if (ListResultActivity.cities.contains(binding.editNev.getText().toString().trim())) {
+                String editNev = binding.editNev.getText().toString().trim();
+                for (int i = 0; i < ListResultActivity.cities.size(); i++) {
+                    if (ListResultActivity.cities.get(i).getNev().equals(editNev)) {
                         binding.editNev.setTextColor(Color.RED);
-                    } else {
+                    }
+                    else {
                         binding.editNev.setTextColor(Color.GREEN);
                     }
+                }
                 }
             else {
                 binding.editNev.setTextColor(Color.BLACK);
