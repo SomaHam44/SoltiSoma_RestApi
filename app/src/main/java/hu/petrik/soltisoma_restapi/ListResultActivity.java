@@ -20,7 +20,8 @@ import hu.petrik.soltisoma_restapi.databinding.ActivityListResultBinding;
 public class ListResultActivity extends AppCompatActivity {
    ActivityListResultBinding binding;
    public static List<City> cities = new ArrayList<>();
-   private String url = "http://10.0.2.2:8000/api/cities";
+   //private String url = "http://10.0.2.2:8000/api/cities";
+   private String url = "https://retoolapi.dev/jSLi3M/varosok";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
