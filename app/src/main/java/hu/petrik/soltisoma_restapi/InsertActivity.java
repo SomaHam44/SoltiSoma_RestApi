@@ -46,6 +46,7 @@ public class InsertActivity extends AppCompatActivity {
                 for (int i = 0; i < ListResultActivity.cities.size(); i++) {
                     if (ListResultActivity.cities.get(i).getNev().equals(editNev)) {
                         binding.editNev.setTextColor(Color.RED);
+                        break;
                     }
                     else {
                         binding.editNev.setTextColor(Color.GREEN);
