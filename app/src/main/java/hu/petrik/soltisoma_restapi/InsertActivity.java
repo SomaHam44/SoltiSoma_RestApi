@@ -2,10 +2,12 @@ package hu.petrik.soltisoma_restapi;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import hu.petrik.soltisoma_restapi.databinding.ActivityInsertBinding;
 
@@ -20,6 +25,11 @@ public class InsertActivity extends AppCompatActivity {
    ActivityInsertBinding binding;
     //private String url = "http://10.0.2.2:8000/api/cities";
     private String url = "https://retoolapi.dev/jSLi3M/varosok";
+    private int[] gifek = new int[]{R.drawable.gif1,
+            R.drawable.gif2, R.drawable.gif3, R.drawable.gif4, R.drawable.gif5,
+            R.drawable.gif6, R.drawable.gif7, R.drawable.gif8, R.drawable.gif9,
+            R.drawable.gif10};
+    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +114,16 @@ public class InsertActivity extends AppCompatActivity {
     private boolean validacio(String nev, String orszag, String lakossagString) {
         if (nev.isEmpty()) {
             Toast.makeText(this, "Név megadása kötelező", Toast.LENGTH_SHORT).show();
+            randomGif();
             return false;
         }
         if (orszag.isEmpty()) {
             Toast.makeText(this, "Ország megadása kötelező", Toast.LENGTH_SHORT).show();
+            randomGif();
             return false;
         }
         if (lakossagString.isEmpty()) {
+            randomGif();
             Toast.makeText(this, "Lakosság megadása kötelező", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -130,20 +143,35 @@ public class InsertActivity extends AppCompatActivity {
         binding.editLakossag.setText("");
     }
 
+    private void randomGif() {
+        binding.animacio.setVisibility(View.VISIBLE);
+        int index = random.nextInt(9) + 1;
+        int gif = gifek[index];
+        binding.animacio.setImageResource(gif);
+
+    }
+
+    private void gifLeallitasa() {
+        binding.animacio.setVisibility(View.INVISIBLE);
+    }
+
     private void varosHozzadasa() {
         String nev = binding.editNev.getText().toString().trim();
         String orszag = binding.editOrszag.getText().toString().trim();
         String lakossagString = binding.editLakossag.getText().toString().trim();
         if (nev.isEmpty() || orszag.isEmpty() || lakossagString.isEmpty()) {
             binding.btnFelvetel.setEnabled(false);
+            randomGif();
         }
         if (!validacio(nev, orszag, lakossagString)) {
             Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
+            randomGif();
             return;
         }
         int lakossag = Integer.parseInt(lakossagString);
         City city = new City(0, nev, orszag, lakossag);
         Toast.makeText(InsertActivity.this, "Sikeres felvétel", Toast.LENGTH_SHORT).show();
+        gifLeallitasa();
         Gson jsonConverter = new Gson();
         CityTask task = new CityTask(url, "POST", jsonConverter.toJson(city));
         task.execute();
