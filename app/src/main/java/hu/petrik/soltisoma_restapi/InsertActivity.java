@@ -109,16 +109,16 @@ public class InsertActivity extends AppCompatActivity {
     private boolean validacio(String nev, String orszag, String lakossagString) {
         if (nev.isEmpty()) {
             Toast.makeText(this, "Név megadása kötelező", Toast.LENGTH_SHORT).show();
-            gif(R.drawable.gif5);
+            gif();
             return false;
         }
         if (orszag.isEmpty()) {
             Toast.makeText(this, "Ország megadása kötelező", Toast.LENGTH_SHORT).show();
-            gif(R.drawable.gif4);
+            gif();
             return false;
         }
         if (lakossagString.isEmpty()) {
-            gif(R.drawable.gif1);
+            gif();
             Toast.makeText(this, "Lakosság megadása kötelező", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -138,10 +138,9 @@ public class InsertActivity extends AppCompatActivity {
         binding.editLakossag.setText("");
     }
 
-    private void gif(int gif) {
+    private void gif() {
         binding.animacio.setVisibility(View.VISIBLE);
-        gif = gif;
-        binding.animacio.setImageResource(gif);
+        binding.animacio.setImageResource(R.drawable.gif1);
 
     }
 
@@ -155,11 +154,11 @@ public class InsertActivity extends AppCompatActivity {
         String lakossagString = binding.editLakossag.getText().toString().trim();
         if (nev.isEmpty() || orszag.isEmpty() || lakossagString.isEmpty()) {
             binding.btnFelvetel.setEnabled(false);
-            gif(R.drawable.gif1);
+            gif();
         }
         if (!validacio(nev, orszag, lakossagString)) {
             Toast.makeText(InsertActivity.this, "Sikertelen felvétel", Toast.LENGTH_SHORT).show();
-            gif(R.drawable.gif3);
+            gif();
             return;
         }
         int lakossag = Integer.parseInt(lakossagString);
